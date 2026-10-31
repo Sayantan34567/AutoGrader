@@ -1,0 +1,88 @@
+===== Grading report for add_leak.c =====
+Overall grade: 91.8 / 100
+FLAG: readability_used_heuristic_fallback
+
+Metric          Weight     Points  Note
+correctness        20%    20.0/20  10/10 tests pass.
+syntax             10%    10.0/10  No diagnostics.
+structure          10%     9.0/10  Complexity and length within limits. cppcheck: 2 issue(s): 11:error:memleak:Memory leak: r
+modularity         10%    10.0/10  2 function(s): add, main.
+logical            10%    10.0/10  44/44 edge cases pass.
+complexity         10%    10.0/10  Estimated O(1) (required O(1)).
+memory_safety      10%     6.6/10  LeakSanitizer: memory leak (input '7 5')
+readability        10%     6.2/10  Terse variable names.
+originality        10%    10.0/10  max similarity 0.38 (safe)
+
+--- Where you failed ---
+[sanitizer]
+  INPUT:    '7 5'
+  EXPECTED: '12'
+  GOT:      '(sanitizer diagnostic)'
+  WHY: The program printed nothing for this input (did it reach printf?).
+
+--- Suggestions to raise the grade ---
+- Fix the sanitizer findings; recompile with -fsanitize=address,undefined to
+  reproduce.
+- terse variable names
+
+--- Usefulness & limitations of this evaluation ---
+Useful for:
+ 1. Large-course lab grading
+    Example: A 300-student C lab is graded unattended. For the sample
+    add.c the agent reports the failing input '2147483647 1', the expected
+    output 2147483648 and why `int` overflows, instead of a bare 'wrong
+    answer'.
+    Benefit: Consistent, reproducible grades; TAs only review the
+    borderline and flagged cases.
+ 2. Instant feedback before the deadline
+    Example: A student runs the agent on a program that mallocs a result
+    and never frees it (add_leak.c): LeakSanitizer and valgrind report the
+    leak and the input that triggers it, and the correctness metric still
+    shows 10/10.
+    Benefit: Students find memory bugs themselves, so fewer regrade
+    requests.
+ 3. Plagiarism and LLM-copy triage
+    Example: add_copy.c has renamed variables and a new comment but
+    reaches similarity 1.00 with another student's file, so the report is
+    flagged suspected_copy; solutions the local LLM writes for the same
+    task are compared as well.
+    Benefit: The instructor reviews only flagged pairs instead of every
+    submission (a flag is a lead, not proof).
+ 4. Coding-interview and hiring screens
+    Example: 500 candidate submissions for 'add two integers safely' are
+    ranked by correctness, edge-case handling and memory safety. A
+    candidate whose program never halts (add_infinite.c) gets a partial
+    report instead of blocking the batch.
+    Benefit: Fast first-round filtering where every score can be explained
+    metric by metric.
+Limits of this report:
+ 1. Passing tests does not prove correctness
+    Example: add_hardcoded.c memorises the 10 hidden tests: the
+    correctness metric gives it 20/20, yet it is wrong for almost every
+    other input. Only the separate 10% 'logical' metric exposes it, so its
+    overall grade (about 77/100) still looks like a pass.
+    Mitigation: Compare against a reference solution on corner cases and
+    seeded fuzz inputs, and weight those metrics heavily.
+ 2. Complexity is only measured on the inputs the agent generates
+    Example: add_slow_branch.c spins for billions of iterations when the
+    first number exceeds 2,000,000,000. The problem has no size parameter,
+    so the estimator always profiles the sample input '7 5' and reports
+    O(1) with full marks, even though two hidden tests time out.
+    Mitigation: Use worst-case inputs in the generator and only trust this
+    metric for problems that have a size parameter.
+ 3. Short problems cause plagiarism false positives
+    Example: add_minimal.c is the obvious six-line scanf/printf solution
+    written independently, yet its normalized tokens equal another
+    student's, so it reaches similarity 1.00, is flagged suspected_copy
+    and loses all originality points.
+    Mitigation: Require a minimum program size, let a human review every
+    flag, and prefer problems with several valid solution shapes.
+ 4. Readability scoring can be gamed
+    Example: Adding meaningless comments such as '// read' and '// print'
+    to add.c (add_noisy_comments.c) raises the heuristic readability score
+    from 0.19 to 0.56 although the single-letter names and single-function
+    layout are unchanged; the heuristic is what runs when Ollama is
+    unavailable.
+    Mitigation: Blend in an LLM review with a rubric, discard the LLM
+    verdict when the code tries to instruct the reviewer, and have a human
+    spot-check readability.

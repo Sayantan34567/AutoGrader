@@ -1,0 +1,47 @@
+# =============================================================================
+# AutoGrader - Python dependencies         install:  pip install -r requirements.txt
+# Target: Ubuntu (lab PC) and WSL2 Ubuntu on Windows 11. Python 3.9+ (developed on 3.13).
+# Everything else the project imports (json, subprocess, concurrent.futures, http.server,
+# hashlib, argparse, ...) is in the Python standard library and needs no install.
+# =============================================================================
+
+# --- Web front end (main.py) -------------------------------------------------
+# Streamlit turns main.py into the browser UI: pick/upload/paste a .c file, run the agent,
+# see the grade, counter-examples and evidence, edit rules.json, batch-grade a folder.
+# Start it with:  streamlit run main.py     (then open http://localhost:8501)
+streamlit>=1.30,<2
+
+# --- Talking to the local LLM (llm.py) --------------------------------------
+# requests sends HTTP calls to the Ollama server on http://localhost:11434
+# (/api/tags to check the model is pulled, /api/chat for readability reviews, extra edge-case
+# proposals, LLM-written reference solutions for the copy check, and the tutor summary).
+requests>=2.31,<3
+
+# --- Static analysis (analyzers/static_analysis.py) ---------------------------
+# lizard computes cyclomatic complexity and function length for C. Optional: if it is missing
+# the analyzer falls back to the built-in parser in cparse.py and records "builtin" as the engine.
+lizard>=1.17
+
+# --- Tests (test_*.py) ---------------------------------------------------------
+# pytest runs the standalone analyzer tests and the end-to-end coordinator test:  pytest -q
+# Optional: every test file also runs without it:  python test_correctness.py
+pytest>=7.4
+
+# =============================================================================
+# NOT installable with pip - install these with apt / the Ollama installer
+# (setup_ubuntu.sh does all of it for you):
+#
+#   sudo apt install build-essential   gcc compiles the submissions (first pass and every analyzer).
+#                                      Its -fsanitize=address,undefined needs libasan/libubsan,
+#                                      which Ubuntu installs together with gcc.
+#   sudo apt install valgrind          memory-leak check (memory_safety) and the instruction
+#                                      counts (callgrind) used by the complexity estimator.
+#   sudo apt install cppcheck          extra static-analysis findings (static_analysis). Optional.
+#   util-linux (prlimit)               applies the CPU / memory / file-size limits to each run.
+#                                      Preinstalled on Ubuntu.
+#   python3-venv python3-pip           virtual environment and pip.
+#   Ollama  https://ollama.com         local LLM server. Install:
+#                                      curl -fsSL https://ollama.com/install.sh | sh
+#                                      then pull the model named in rules.json ("llm.model"):
+#                                      ollama pull llama3.2:3b     (8 GB RAM; use llama3.1:8b with 16 GB+)
+# =============================================================================

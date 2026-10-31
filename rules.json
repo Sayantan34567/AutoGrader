@@ -1,0 +1,67 @@
+{
+  "problem": {
+    "id": "add_two_integers",
+    "statement": "Read two integers on a single line separated by whitespace and print their sum followed by a newline. Each input integer fits in a signed 32-bit int, but the sum may not: the expected output is the mathematical sum (signed overflow is undefined behaviour in C, so a correct program must use a wider type such as long long). Sample input: 7 5  ->  sample output: 12",
+    "reference": "problems/add.py",
+    "tests_dir": "tests/add/"
+  },
+  "time_limit_s": 1,
+  "memory_limit_mb": 64,
+
+  "llm": {
+    "enabled": true,
+    "host": "http://localhost:11434",
+    "model": "llama3.2:3b",
+    "temperature": 0,
+    "seed": 42,
+    "timeout_s": 180
+  },
+
+  "first_pass": {
+    "compile_flags": "-O2 -Wall -Wextra -std=c11"
+  },
+
+  "report": {
+    "usefulness_limitations_file": "docs/usefulness_limitations.json",
+    "llm_summary": true,
+    "max_counterexamples": 5
+  },
+
+  "metrics": [
+    {"name": "correctness", "analyzer": "correctness", "weight": 0.20,
+     "params": {"compare": "ignore_trailing_whitespace"}},
+
+    {"name": "syntax", "analyzer": "compiler_warnings", "weight": 0.10,
+     "params": {"flags": "-Wall -Wextra -Werror -std=c11", "penalty_per_diagnostic": 0.25}},
+
+    {"name": "structure", "analyzer": "static_analysis", "weight": 0.10,
+     "params": {"max_cyclomatic": 8, "max_function_length": 40}},
+
+    {"name": "modularity", "analyzer": "modularity", "weight": 0.10,
+     "params": {"expect_helpers": true, "min_functions": 2}},
+
+    {"name": "logical", "analyzer": "edge_cases", "weight": 0.10,
+     "params": {"cases": ["negatives", "zero", "boundaries", "int_overflow", "whitespace"],
+                "fuzz": 25, "seed": 1234,
+                "llm_cases": 6, "llm_cases_count_in_score": false}},
+
+    {"name": "complexity", "analyzer": "complexity", "weight": 0.10,
+     "params": {"required": "O(1)", "sizes": [1, 10, 100]}},
+
+    {"name": "memory_safety", "analyzer": "memory_safety", "weight": 0.10,
+     "params": {"flags": "-fsanitize=address,undefined", "valgrind": true}},
+
+    {"name": "readability", "analyzer": "readability", "weight": 0.10,
+     "params": {"mode": "auto", "llm_weight": 0.7,
+                "rubric": [
+                  {"id": "naming", "desc": "variable and function names are descriptive, not single letters"},
+                  {"id": "comments", "desc": "comments explain intent where useful, without noise"},
+                  {"id": "formatting", "desc": "consistent indentation and spacing around operators and commas"},
+                  {"id": "structure", "desc": "logic is split into small functions with clear responsibilities"}
+                ]}},
+
+    {"name": "originality", "analyzer": "originality", "weight": 0.10,
+     "params": {"corpus_dirs": ["submissions/"], "flag_threshold": 0.85,
+                "llm_reference_solutions": 3, "llm_flag_threshold": 0.9}}
+  ]
+}

@@ -1,0 +1,517 @@
+{
+  "submission": "add.c",
+  "rules_hash": "sha256:b4d1fb5755681c575b3a526bc3aea8eb40475d24bf49369297fd6a554b03280d",
+  "grade": 74.76,
+  "partial": false,
+  "first_pass": {
+    "compiled": true,
+    "compile_warnings": 1,
+    "smoke_ok": true,
+    "smoke_status": "ok",
+    "suspected_infinite_loop": false,
+    "static_sanity": {
+      "has_main": true,
+      "has_reader": true,
+      "has_writer": true,
+      "has_return_in_main": true
+    }
+  },
+  "metrics": [
+    {
+      "name": "correctness",
+      "analyzer": "correctness",
+      "status": "ok",
+      "score": 0.7,
+      "weight": 0.2,
+      "effective_weight": 0.2,
+      "contribution": 14.0,
+      "evidence": {
+        "tests_passed": 7,
+        "tests_total": 10,
+        "failing": [
+          {
+            "category": "test 07",
+            "input": "2147483647 1\n",
+            "expected": "2147483648\n",
+            "got": "-2147483648\n",
+            "note": ""
+          },
+          {
+            "category": "test 08",
+            "input": "2147483647 2147483647\n",
+            "expected": "4294967294\n",
+            "got": "-2\n",
+            "note": ""
+          },
+          {
+            "category": "test 09",
+            "input": "-2147483648 -1\n",
+            "expected": "-2147483649\n",
+            "got": "2147483647\n",
+            "note": ""
+          }
+        ]
+      },
+      "feedback": "7/10 tests pass. First failure: input '2147483647 1'."
+    },
+    {
+      "name": "syntax",
+      "analyzer": "compiler_warnings",
+      "status": "ok",
+      "score": 1.0,
+      "weight": 0.1,
+      "effective_weight": 0.1,
+      "contribution": 10.0,
+      "evidence": {
+        "flags": "-Wall -Wextra -Werror -std=c11",
+        "compiled": true,
+        "compile_error": false,
+        "diagnostics": []
+      },
+      "feedback": "No diagnostics."
+    },
+    {
+      "name": "structure",
+      "analyzer": "static_analysis",
+      "status": "ok",
+      "score": 1.0,
+      "weight": 0.1,
+      "effective_weight": 0.1,
+      "contribution": 10.0,
+      "evidence": {
+        "engine": "lizard",
+        "functions": [
+          {
+            "name": "main",
+            "cyclomatic": 1,
+            "length": 6
+          }
+        ],
+        "violations": [],
+        "cppcheck": []
+      },
+      "feedback": "Complexity and length within limits."
+    },
+    {
+      "name": "modularity",
+      "analyzer": "modularity",
+      "status": "ok",
+      "score": 0.5,
+      "weight": 0.1,
+      "effective_weight": 0.1,
+      "contribution": 5.0,
+      "evidence": {
+        "functions_defined": 1,
+        "expected_min": 2,
+        "names": [
+          "main"
+        ],
+        "helpers_called_from_main": []
+      },
+      "feedback": "Only 1 function(s) defined (expected at least 2)."
+    },
+    {
+      "name": "logical",
+      "analyzer": "edge_cases",
+      "status": "ok",
+      "score": 0.7273,
+      "weight": 0.1,
+      "effective_weight": 0.1,
+      "contribution": 7.27,
+      "evidence": {
+        "cases_run": 44,
+        "passed": 32,
+        "failing_by_category": {
+          "int_overflow": 3,
+          "fuzz": 9
+        },
+        "llm_cases": {
+          "requested": 6,
+          "proposed": 0,
+          "valid": 0,
+          "status": "skipped: Ollama not reachable at http://localhost:11434 (ConnectionError); start it with `ollama serve`"
+        },
+        "llm_cases_run": 0,
+        "llm_cases_passed": 0,
+        "unknown_categories": [],
+        "failing": [
+          {
+            "category": "int_overflow",
+            "input": "2147483647 1\n",
+            "expected": "2147483648\n",
+            "got": "-2147483648\n",
+            "note": ""
+          },
+          {
+            "category": "int_overflow",
+            "input": "-2147483648 -1\n",
+            "expected": "-2147483649\n",
+            "got": "2147483647\n",
+            "note": ""
+          },
+          {
+            "category": "int_overflow",
+            "input": "2147483647 2147483647\n",
+            "expected": "4294967294\n",
+            "got": "-2\n",
+            "note": ""
+          },
+          {
+            "category": "fuzz",
+            "input": "-254551521 -2147483647\n",
+            "expected": "-2402035168\n",
+            "got": "1892932128\n",
+            "note": ""
+          },
+          {
+            "category": "fuzz",
+            "input": "-1786971706 -1130393399\n",
+            "expected": "-2917365105\n",
+            "got": "1377602191\n",
+            "note": ""
+          },
+          {
+            "category": "fuzz",
+            "input": "1770880053 2147483646\n",
+            "expected": "3918363699\n",
+            "got": "-376603597\n",
+            "note": ""
+          },
+          {
+            "category": "fuzz",
+            "input": "-2147483648 -2147483647\n",
+            "expected": "-4294967295\n",
+            "got": "1\n",
+            "note": ""
+          },
+          {
+            "category": "fuzz",
+            "input": "1434043593 2147483647\n",
+            "expected": "3581527240\n",
+            "got": "-713440056\n",
+            "note": ""
+          },
+          {
+            "category": "fuzz",
+            "input": "-266837568 -2147483647\n",
+            "expected": "-2414321215\n",
+            "got": "1880646081\n",
+            "note": ""
+          },
+          {
+            "category": "fuzz",
+            "input": "2147483647 1462738637\n",
+            "expected": "3610222284\n",
+            "got": "-684745012\n",
+            "note": ""
+          },
+          {
+            "category": "fuzz",
+            "input": "-1984298086 -786039025\n",
+            "expected": "-2770337111\n",
+            "got": "1524630185\n",
+            "note": ""
+          },
+          {
+            "category": "fuzz",
+            "input": "1540545378 869367842\n",
+            "expected": "2409913220\n",
+            "got": "-1885054076\n",
+            "note": ""
+          }
+        ]
+      },
+      "feedback": "32/44 edge cases pass. Failing: fuzz x9, int_overflow x3."
+    },
+    {
+      "name": "complexity",
+      "analyzer": "complexity",
+      "status": "ok",
+      "score": 1.0,
+      "weight": 0.1,
+      "effective_weight": 0.1,
+      "contribution": 10.0,
+      "evidence": {
+        "required": "O(1)",
+        "estimated": "O(1)",
+        "sizes": [
+          1,
+          10,
+          100
+        ],
+        "instruction_counts": [
+          122852,
+          122852,
+          122852
+        ],
+        "note": "This problem has no size parameter (every size gives the same input), so only O(1) can be shown."
+      },
+      "feedback": "Estimated O(1) (required O(1))."
+    },
+    {
+      "name": "memory_safety",
+      "analyzer": "memory_safety",
+      "status": "ok",
+      "score": 0.66,
+      "weight": 0.1,
+      "effective_weight": 0.1,
+      "contribution": 6.6,
+      "evidence": {
+        "flags": "-fsanitize=address,undefined",
+        "findings": {
+          "UBSan: signed integer overflow": {
+            "input": "2147483647 1\n",
+            "category": "test 07",
+            "message": "add.c:5:2: runtime error: signed integer overflow: 2147483647 + 1 cannot be represented in type 'int'"
+          }
+        },
+        "valgrind": {
+          "definitely_lost_bytes": 0
+        }
+      },
+      "feedback": "UBSan: signed integer overflow (input '2147483647 1')"
+    },
+    {
+      "name": "readability",
+      "analyzer": "readability",
+      "status": "ok",
+      "score": 0.1886,
+      "weight": 0.1,
+      "effective_weight": 0.1,
+      "contribution": 1.89,
+      "evidence": {
+        "model": "llama3.2:3b",
+        "temperature": 0,
+        "seed": 42,
+        "heuristic_score": 0.1886,
+        "heuristic_parts": {
+          "comments": 0.0,
+          "names": 0.0,
+          "spacing": 0.643,
+          "structure": 0.3
+        },
+        "llm_error": "Ollama not reachable at http://localhost:11434 (ConnectionError); start it with `ollama serve`",
+        "mode": "heuristic"
+      },
+      "feedback": "Few or no comments; terse variable names; cramped formatting; everything in main()."
+    },
+    {
+      "name": "originality",
+      "analyzer": "originality",
+      "status": "ok",
+      "score": 1.0,
+      "weight": 0.1,
+      "effective_weight": 0.1,
+      "contribution": 10.0,
+      "evidence": {
+        "max_similarity": 0.7692,
+        "most_similar_to": "submissions/other_add.c",
+        "threshold": 0.85,
+        "tokens": 34,
+        "compared_files": 1,
+        "ignored_identical_resubmission": [
+          "add.c"
+        ],
+        "top_matches": [
+          [
+            0.7692,
+            "submissions/other_add.c"
+          ]
+        ],
+        "llm_style_signals": [],
+        "llm_solutions": {
+          "status": "skipped: Ollama not reachable at http://localhost:11434 (ConnectionError); start it with `ollama serve`",
+          "max_similarity": 0.0,
+          "closest": null,
+          "threshold": 0.9,
+          "compared": 0
+        }
+      },
+      "feedback": "max similarity 0.77 (safe)"
+    }
+  ],
+  "flags": [
+    "readability_used_heuristic_fallback"
+  ],
+  "counterexamples": [
+    {
+      "category": "test 07",
+      "input": "2147483647 1\n",
+      "expected": "2147483648\n",
+      "got": "-2147483648\n",
+      "note": "add.c:5:2: runtime error: signed integer overflow: 2147483647 + 1 cannot be represented in type 'int'",
+      "why": "2147483647 + 1 = 2147483648 does not fit in a 32-bit signed int, so `a + b` on `int` overflows (undefined behaviour in C). Read into `long long` or check `b <= INT_MAX - a` before adding."
+    },
+    {
+      "category": "test 09",
+      "input": "-2147483648 -1\n",
+      "expected": "-2147483649\n",
+      "got": "2147483647\n",
+      "note": "",
+      "why": "-2147483648 + -1 = -2147483649 does not fit in a 32-bit signed int, so `a + b` on `int` overflows (undefined behaviour in C). Read into `long long` or check `b <= INT_MAX - a` before adding."
+    },
+    {
+      "category": "fuzz",
+      "input": "1540545378 869367842\n",
+      "expected": "2409913220\n",
+      "got": "-1885054076\n",
+      "note": "",
+      "why": "1540545378 + 869367842 = 2409913220 does not fit in a 32-bit signed int, so `a + b` on `int` overflows (undefined behaviour in C). Read into `long long` or check `b <= INT_MAX - a` before adding."
+    },
+    {
+      "category": "fuzz",
+      "input": "1434043593 2147483647\n",
+      "expected": "3581527240\n",
+      "got": "-713440056\n",
+      "note": "",
+      "why": "1434043593 + 2147483647 = 3581527240 does not fit in a 32-bit signed int, so `a + b` on `int` overflows (undefined behaviour in C). Read into `long long` or check `b <= INT_MAX - a` before adding."
+    },
+    {
+      "category": "fuzz",
+      "input": "1770880053 2147483646\n",
+      "expected": "3918363699\n",
+      "got": "-376603597\n",
+      "note": "",
+      "why": "1770880053 + 2147483646 = 3918363699 does not fit in a 32-bit signed int, so `a + b` on `int` overflows (undefined behaviour in C). Read into `long long` or check `b <= INT_MAX - a` before adding."
+    },
+    {
+      "category": "fuzz",
+      "input": "2147483647 1462738637\n",
+      "expected": "3610222284\n",
+      "got": "-684745012\n",
+      "note": "",
+      "why": "2147483647 + 1462738637 = 3610222284 does not fit in a 32-bit signed int, so `a + b` on `int` overflows (undefined behaviour in C). Read into `long long` or check `b <= INT_MAX - a` before adding."
+    },
+    {
+      "category": "test 08",
+      "input": "2147483647 2147483647\n",
+      "expected": "4294967294\n",
+      "got": "-2\n",
+      "note": "",
+      "why": "2147483647 + 2147483647 = 4294967294 does not fit in a 32-bit signed int, so `a + b` on `int` overflows (undefined behaviour in C). Read into `long long` or check `b <= INT_MAX - a` before adding."
+    },
+    {
+      "category": "fuzz",
+      "input": "-1984298086 -786039025\n",
+      "expected": "-2770337111\n",
+      "got": "1524630185\n",
+      "note": "",
+      "why": "-1984298086 + -786039025 = -2770337111 does not fit in a 32-bit signed int, so `a + b` on `int` overflows (undefined behaviour in C). Read into `long long` or check `b <= INT_MAX - a` before adding."
+    },
+    {
+      "category": "fuzz",
+      "input": "-254551521 -2147483647\n",
+      "expected": "-2402035168\n",
+      "got": "1892932128\n",
+      "note": "",
+      "why": "-254551521 + -2147483647 = -2402035168 does not fit in a 32-bit signed int, so `a + b` on `int` overflows (undefined behaviour in C). Read into `long long` or check `b <= INT_MAX - a` before adding."
+    },
+    {
+      "category": "fuzz",
+      "input": "-266837568 -2147483647\n",
+      "expected": "-2414321215\n",
+      "got": "1880646081\n",
+      "note": "",
+      "why": "-266837568 + -2147483647 = -2414321215 does not fit in a 32-bit signed int, so `a + b` on `int` overflows (undefined behaviour in C). Read into `long long` or check `b <= INT_MAX - a` before adding."
+    },
+    {
+      "category": "fuzz",
+      "input": "-1786971706 -1130393399\n",
+      "expected": "-2917365105\n",
+      "got": "1377602191\n",
+      "note": "",
+      "why": "-1786971706 + -1130393399 = -2917365105 does not fit in a 32-bit signed int, so `a + b` on `int` overflows (undefined behaviour in C). Read into `long long` or check `b <= INT_MAX - a` before adding."
+    },
+    {
+      "category": "fuzz",
+      "input": "-2147483648 -2147483647\n",
+      "expected": "-4294967295\n",
+      "got": "1\n",
+      "note": "",
+      "why": "-2147483648 + -2147483647 = -4294967295 does not fit in a 32-bit signed int, so `a + b` on `int` overflows (undefined behaviour in C). Read into `long long` or check `b <= INT_MAX - a` before adding."
+    }
+  ],
+  "suggestions": [
+    "Extract the core logic into a helper, e.g. `long long add(long long a, long long b)`, and call it from main.",
+    "Fix the sanitizer findings; recompile with -fsanitize=address,undefined to reproduce.",
+    "few or no comments",
+    "terse variable names",
+    "cramped formatting",
+    "everything in main()"
+  ],
+  "llm": {
+    "enabled": false,
+    "model": "llama3.2:3b",
+    "status": "Ollama not reachable at http://localhost:11434 (ConnectionError); start it with `ollama serve`"
+  },
+  "llm_summary": null,
+  "usefulness_limitations": {
+    "usefulness": [
+      {
+        "use_case": "Large-course lab grading",
+        "example": "A 300-student C lab is graded unattended. For the sample add.c the agent reports the failing input '2147483647 1', the expected output 2147483648 and why `int` overflows, instead of a bare 'wrong answer'.",
+        "benefit": "Consistent, reproducible grades; TAs only review the borderline and flagged cases."
+      },
+      {
+        "use_case": "Instant feedback before the deadline",
+        "example": "A student runs the agent on a program that mallocs a result and never frees it (add_leak.c): LeakSanitizer and valgrind report the leak and the input that triggers it, and the correctness metric still shows 10/10.",
+        "benefit": "Students find memory bugs themselves, so fewer regrade requests."
+      },
+      {
+        "use_case": "Plagiarism and LLM-copy triage",
+        "example": "add_copy.c has renamed variables and a new comment but reaches similarity 1.00 with another student's file, so the report is flagged suspected_copy; solutions the local LLM writes for the same task are compared as well.",
+        "benefit": "The instructor reviews only flagged pairs instead of every submission (a flag is a lead, not proof)."
+      },
+      {
+        "use_case": "Coding-interview and hiring screens",
+        "example": "500 candidate submissions for 'add two integers safely' are ranked by correctness, edge-case handling and memory safety. A candidate whose program never halts (add_infinite.c) gets a partial report instead of blocking the batch.",
+        "benefit": "Fast first-round filtering where every score can be explained metric by metric."
+      }
+    ],
+    "limitations": [
+      {
+        "limitation": "Passing tests does not prove correctness",
+        "example": "add_hardcoded.c memorises the 10 hidden tests: the correctness metric gives it 20/20, yet it is wrong for almost every other input. Only the separate 10% 'logical' metric exposes it, so its overall grade (about 77/100) still looks like a pass.",
+        "mitigation": "Compare against a reference solution on corner cases and seeded fuzz inputs, and weight those metrics heavily."
+      },
+      {
+        "limitation": "Complexity is only measured on the inputs the agent generates",
+        "example": "add_slow_branch.c spins for billions of iterations when the first number exceeds 2,000,000,000. The problem has no size parameter, so the estimator always profiles the sample input '7 5' and reports O(1) with full marks, even though two hidden tests time out.",
+        "mitigation": "Use worst-case inputs in the generator and only trust this metric for problems that have a size parameter."
+      },
+      {
+        "limitation": "Short problems cause plagiarism false positives",
+        "example": "add_minimal.c is the obvious six-line scanf/printf solution written independently, yet its normalized tokens equal another student's, so it reaches similarity 1.00, is flagged suspected_copy and loses all originality points.",
+        "mitigation": "Require a minimum program size, let a human review every flag, and prefer problems with several valid solution shapes."
+      },
+      {
+        "limitation": "Readability scoring can be gamed",
+        "example": "Adding meaningless comments such as '// read' and '// print' to add.c (add_noisy_comments.c) raises the heuristic readability score from 0.19 to 0.56 although the single-letter names and single-function layout are unchanged; the heuristic is what runs when Ollama is unavailable.",
+        "mitigation": "Blend in an LLM review with a rubric, discard the LLM verdict when the code tries to instruct the reviewer, and have a human spot-check readability."
+      }
+    ]
+  },
+  "tool_versions": {
+    "gcc": "gcc (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0",
+    "valgrind": "valgrind-3.22.0",
+    "cppcheck": "Cppcheck 2.13.0",
+    "python": "3.12.3",
+    "lizard": "1.24.3"
+  },
+  "agent_log": [
+    "[rules] rules.json: 9 metrics, weights sum to 1.00",
+    "[llm] Ollama not reachable at http://localhost:11434 (ConnectionError); start it with `ollama serve`",
+    "[first_pass] compiled (1 warning(s)), smoke run OK",
+    "[dispatch] correctness (correctness) -> ok, score 0.70",
+    "[dispatch] syntax (compiler_warnings) -> ok, score 1.00",
+    "[dispatch] structure (static_analysis) -> ok, score 1.00",
+    "[dispatch] modularity (modularity) -> ok, score 0.50",
+    "[dispatch] logical (edge_cases) -> ok, score 0.73",
+    "[dispatch] complexity (complexity) -> ok, score 1.00",
+    "[dispatch] memory_safety (memory_safety) -> ok, score 0.66",
+    "[dispatch] readability (readability) -> ok, score 0.19",
+    "[dispatch] originality (originality) -> ok, score 1.00",
+    "[collate] grade 74.76/100",
+    "[write] add.json and add.txt"
+  ]
+}

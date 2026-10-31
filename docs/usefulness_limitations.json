@@ -1,0 +1,30 @@
+{
+  "usefulness": [
+    {"use_case": "Large-course lab grading",
+     "example": "A 300-student C lab is graded unattended. For the sample add.c the agent reports the failing input '2147483647 1', the expected output 2147483648 and why `int` overflows, instead of a bare 'wrong answer'.",
+     "benefit": "Consistent, reproducible grades; TAs only review the borderline and flagged cases."},
+    {"use_case": "Instant feedback before the deadline",
+     "example": "A student runs the agent on a program that mallocs a result and never frees it (add_leak.c): LeakSanitizer and valgrind report the leak and the input that triggers it, and the correctness metric still shows 10/10.",
+     "benefit": "Students find memory bugs themselves, so fewer regrade requests."},
+    {"use_case": "Plagiarism and LLM-copy triage",
+     "example": "add_copy.c has renamed variables and a new comment but reaches similarity 1.00 with another student's file, so the report is flagged suspected_copy; solutions the local LLM writes for the same task are compared as well.",
+     "benefit": "The instructor reviews only flagged pairs instead of every submission (a flag is a lead, not proof)."},
+    {"use_case": "Coding-interview and hiring screens",
+     "example": "500 candidate submissions for 'add two integers safely' are ranked by correctness, edge-case handling and memory safety. A candidate whose program never halts (add_infinite.c) gets a partial report instead of blocking the batch.",
+     "benefit": "Fast first-round filtering where every score can be explained metric by metric."}
+  ],
+  "limitations": [
+    {"limitation": "Passing tests does not prove correctness",
+     "example": "add_hardcoded.c memorises the 10 hidden tests: the correctness metric gives it 20/20, yet it is wrong for almost every other input. Only the separate 10% 'logical' metric exposes it, so its overall grade (about 77/100) still looks like a pass.",
+     "mitigation": "Compare against a reference solution on corner cases and seeded fuzz inputs, and weight those metrics heavily."},
+    {"limitation": "Complexity is only measured on the inputs the agent generates",
+     "example": "add_slow_branch.c spins for billions of iterations when the first number exceeds 2,000,000,000. The problem has no size parameter, so the estimator always profiles the sample input '7 5' and reports O(1) with full marks, even though two hidden tests time out.",
+     "mitigation": "Use worst-case inputs in the generator and only trust this metric for problems that have a size parameter."},
+    {"limitation": "Short problems cause plagiarism false positives",
+     "example": "add_minimal.c is the obvious six-line scanf/printf solution written independently, yet its normalized tokens equal another student's, so it reaches similarity 1.00, is flagged suspected_copy and loses all originality points.",
+     "mitigation": "Require a minimum program size, let a human review every flag, and prefer problems with several valid solution shapes."},
+    {"limitation": "Readability scoring can be gamed",
+     "example": "Adding meaningless comments such as '// read' and '// print' to add.c (add_noisy_comments.c) raises the heuristic readability score from 0.19 to 0.56 although the single-letter names and single-function layout are unchanged; the heuristic is what runs when Ollama is unavailable.",
+     "mitigation": "Blend in an LLM review with a rubric, discard the LLM verdict when the code tries to instruct the reviewer, and have a human spot-check readability."}
+  ]
+}

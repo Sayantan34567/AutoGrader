@@ -1,0 +1,781 @@
+{
+  "submission": "add_hardcoded.c",
+  "rules_hash": "sha256:b4d1fb5755681c575b3a526bc3aea8eb40475d24bf49369297fd6a554b03280d",
+  "grade": 77.46,
+  "partial": false,
+  "first_pass": {
+    "compiled": true,
+    "compile_warnings": 1,
+    "smoke_ok": true,
+    "smoke_status": "ok",
+    "suspected_infinite_loop": false,
+    "static_sanity": {
+      "has_main": true,
+      "has_reader": true,
+      "has_writer": true,
+      "has_return_in_main": true
+    }
+  },
+  "metrics": [
+    {
+      "name": "correctness",
+      "analyzer": "correctness",
+      "status": "ok",
+      "score": 1.0,
+      "weight": 0.2,
+      "effective_weight": 0.2,
+      "contribution": 20.0,
+      "evidence": {
+        "tests_passed": 10,
+        "tests_total": 10,
+        "failing": []
+      },
+      "feedback": "10/10 tests pass."
+    },
+    {
+      "name": "syntax",
+      "analyzer": "compiler_warnings",
+      "status": "ok",
+      "score": 1.0,
+      "weight": 0.1,
+      "effective_weight": 0.1,
+      "contribution": 10.0,
+      "evidence": {
+        "flags": "-Wall -Wextra -Werror -std=c11",
+        "compiled": true,
+        "compile_error": false,
+        "diagnostics": []
+      },
+      "feedback": "No diagnostics."
+    },
+    {
+      "name": "structure",
+      "analyzer": "static_analysis",
+      "status": "ok",
+      "score": 0.75,
+      "weight": 0.1,
+      "effective_weight": 0.1,
+      "contribution": 7.5,
+      "evidence": {
+        "engine": "lizard",
+        "functions": [
+          {
+            "name": "main",
+            "cyclomatic": 21,
+            "length": 16
+          }
+        ],
+        "violations": [
+          "main(): cyclomatic 21 (max 8), length 16 (max 40)"
+        ],
+        "cppcheck": []
+      },
+      "feedback": "main(): cyclomatic 21 (max 8), length 16 (max 40)"
+    },
+    {
+      "name": "modularity",
+      "analyzer": "modularity",
+      "status": "ok",
+      "score": 0.5,
+      "weight": 0.1,
+      "effective_weight": 0.1,
+      "contribution": 5.0,
+      "evidence": {
+        "functions_defined": 1,
+        "expected_min": 2,
+        "names": [
+          "main"
+        ],
+        "helpers_called_from_main": []
+      },
+      "feedback": "Only 1 function(s) defined (expected at least 2)."
+    },
+    {
+      "name": "logical",
+      "analyzer": "edge_cases",
+      "status": "ok",
+      "score": 0.1364,
+      "weight": 0.1,
+      "effective_weight": 0.1,
+      "contribution": 1.36,
+      "evidence": {
+        "cases_run": 44,
+        "passed": 6,
+        "failing_by_category": {
+          "negatives": 3,
+          "zero": 2,
+          "boundaries": 3,
+          "whitespace": 6,
+          "fuzz": 24
+        },
+        "llm_cases": {
+          "requested": 6,
+          "proposed": 0,
+          "valid": 0,
+          "status": "skipped: LLM disabled in rules.json (llm.enabled = false)"
+        },
+        "llm_cases_run": 0,
+        "llm_cases_passed": 0,
+        "unknown_categories": [],
+        "failing": [
+          {
+            "category": "negatives",
+            "input": "-1 -1\n",
+            "expected": "-2\n",
+            "got": "-1\n",
+            "note": ""
+          },
+          {
+            "category": "negatives",
+            "input": "-7 3\n",
+            "expected": "-4\n",
+            "got": "-3\n",
+            "note": ""
+          },
+          {
+            "category": "negatives",
+            "input": "3 -7\n",
+            "expected": "-4\n",
+            "got": "-3\n",
+            "note": ""
+          },
+          {
+            "category": "zero",
+            "input": "0 5\n",
+            "expected": "5\n",
+            "got": "6\n",
+            "note": ""
+          },
+          {
+            "category": "zero",
+            "input": "-5 0\n",
+            "expected": "-5\n",
+            "got": "-4\n",
+            "note": ""
+          },
+          {
+            "category": "boundaries",
+            "input": "2147483647 0\n",
+            "expected": "2147483647\n",
+            "got": "2147483648\n",
+            "note": ""
+          },
+          {
+            "category": "boundaries",
+            "input": "0 2147483647\n",
+            "expected": "2147483647\n",
+            "got": "2147483648\n",
+            "note": ""
+          },
+          {
+            "category": "boundaries",
+            "input": "-2147483648 2147483647\n",
+            "expected": "-1\n",
+            "got": "0\n",
+            "note": ""
+          },
+          {
+            "category": "whitespace",
+            "input": "3   4\n",
+            "expected": "7\n",
+            "got": "8\n",
+            "note": ""
+          },
+          {
+            "category": "whitespace",
+            "input": "\t3 \t 4\n",
+            "expected": "7\n",
+            "got": "8\n",
+            "note": ""
+          },
+          {
+            "category": "whitespace",
+            "input": "3 4",
+            "expected": "7\n",
+            "got": "8\n",
+            "note": ""
+          },
+          {
+            "category": "whitespace",
+            "input": "  3 4  \n",
+            "expected": "7\n",
+            "got": "8\n",
+            "note": ""
+          },
+          {
+            "category": "whitespace",
+            "input": "3 4\r\n",
+            "expected": "7\n",
+            "got": "8\n",
+            "note": ""
+          },
+          {
+            "category": "whitespace",
+            "input": "3\n4\n",
+            "expected": "7\n",
+            "got": "8\n",
+            "note": ""
+          },
+          {
+            "category": "fuzz",
+            "input": "-254551521 -2147483647\n",
+            "expected": "-2402035168\n",
+            "got": "-2402035167\n",
+            "note": ""
+          },
+          {
+            "category": "fuzz",
+            "input": "-1786971706 -1130393399\n",
+            "expected": "-2917365105\n",
+            "got": "-2917365104\n",
+            "note": ""
+          },
+          {
+            "category": "fuzz",
+            "input": "-2147483647 2147483646\n",
+            "expected": "-1\n",
+            "got": "0\n",
+            "note": ""
+          },
+          {
+            "category": "fuzz",
+            "input": "497424637 1\n",
+            "expected": "497424638\n",
+            "got": "497424639\n",
+            "note": ""
+          },
+          {
+            "category": "fuzz",
+            "input": "1483260623 -1074480244\n",
+            "expected": "408780379\n",
+            "got": "408780380\n",
+            "note": ""
+          },
+          {
+            "category": "fuzz",
+            "input": "1770880053 2147483646\n",
+            "expected": "3918363699\n",
+            "got": "3918363700\n",
+            "note": ""
+          },
+          {
+            "category": "fuzz",
+            "input": "-2147483648 -2147483647\n",
+            "expected": "-4294967295\n",
+            "got": "-4294967294\n",
+            "note": ""
+          },
+          {
+            "category": "fuzz",
+            "input": "621199301 -621743136\n",
+            "expected": "-543835\n",
+            "got": "-543834\n",
+            "note": ""
+          },
+          {
+            "category": "fuzz",
+            "input": "1 34797510\n",
+            "expected": "34797511\n",
+            "got": "34797512\n",
+            "note": ""
+          },
+          {
+            "category": "fuzz",
+            "input": "1 675832417\n",
+            "expected": "675832418\n",
+            "got": "675832419\n",
+            "note": ""
+          },
+          {
+            "category": "fuzz",
+            "input": "0 -1443095139\n",
+            "expected": "-1443095139\n",
+            "got": "-1443095138\n",
+            "note": ""
+          },
+          {
+            "category": "fuzz",
+            "input": "-1527952975 1163850118\n",
+            "expected": "-364102857\n",
+            "got": "-364102856\n",
+            "note": ""
+          },
+          {
+            "category": "fuzz",
+            "input": "-835831967 -1\n",
+            "expected": "-835831968\n",
+            "got": "-835831967\n",
+            "note": ""
+          },
+          {
+            "category": "fuzz",
+            "input": "-1974805695 -1\n",
+            "expected": "-1974805696\n",
+            "got": "-1974805695\n",
+            "note": ""
+          },
+          {
+            "category": "fuzz",
+            "input": "1434043593 2147483647\n",
+            "expected": "3581527240\n",
+            "got": "3581527241\n",
+            "note": ""
+          },
+          {
+            "category": "fuzz",
+            "input": "-17795104 -136927184\n",
+            "expected": "-154722288\n",
+            "got": "-154722287\n",
+            "note": ""
+          },
+          {
+            "category": "fuzz",
+            "input": "2147483647 -1417462232\n",
+            "expected": "730021415\n",
+            "got": "730021416\n",
+            "note": ""
+          },
+          {
+            "category": "fuzz",
+            "input": "-266837568 -2147483647\n",
+            "expected": "-2414321215\n",
+            "got": "-2414321214\n",
+            "note": ""
+          },
+          {
+            "category": "fuzz",
+            "input": "2147483647 1462738637\n",
+            "expected": "3610222284\n",
+            "got": "3610222285\n",
+            "note": ""
+          },
+          {
+            "category": "fuzz",
+            "input": "-1325370558 2147483646\n",
+            "expected": "822113088\n",
+            "got": "822113089\n",
+            "note": ""
+          },
+          {
+            "category": "fuzz",
+            "input": "945442475 -1843512124\n",
+            "expected": "-898069649\n",
+            "got": "-898069648\n",
+            "note": ""
+          },
+          {
+            "category": "fuzz",
+            "input": "-1984298086 -786039025\n",
+            "expected": "-2770337111\n",
+            "got": "-2770337110\n",
+            "note": ""
+          },
+          {
+            "category": "fuzz",
+            "input": "-1280343591 1663669940\n",
+            "expected": "383326349\n",
+            "got": "383326350\n",
+            "note": ""
+          },
+          {
+            "category": "fuzz",
+            "input": "1540545378 869367842\n",
+            "expected": "2409913220\n",
+            "got": "2409913221\n",
+            "note": ""
+          }
+        ]
+      },
+      "feedback": "6/44 edge cases pass. Failing: boundaries x3, fuzz x24, negatives x3, whitespace x6, zero x2."
+    },
+    {
+      "name": "complexity",
+      "analyzer": "complexity",
+      "status": "ok",
+      "score": 1.0,
+      "weight": 0.1,
+      "effective_weight": 0.1,
+      "contribution": 10.0,
+      "evidence": {
+        "required": "O(1)",
+        "estimated": "O(1)",
+        "sizes": [
+          1,
+          10,
+          100
+        ],
+        "instruction_counts": [
+          122742,
+          122742,
+          122742
+        ],
+        "note": "This problem has no size parameter (every size gives the same input), so only O(1) can be shown."
+      },
+      "feedback": "Estimated O(1) (required O(1))."
+    },
+    {
+      "name": "memory_safety",
+      "analyzer": "memory_safety",
+      "status": "ok",
+      "score": 1.0,
+      "weight": 0.1,
+      "effective_weight": 0.1,
+      "contribution": 10.0,
+      "evidence": {
+        "flags": "-fsanitize=address,undefined",
+        "findings": {},
+        "valgrind": {
+          "definitely_lost_bytes": 0
+        }
+      },
+      "feedback": "ASan/UBSan clean."
+    },
+    {
+      "name": "readability",
+      "analyzer": "readability",
+      "status": "ok",
+      "score": 0.36,
+      "weight": 0.1,
+      "effective_weight": 0.1,
+      "contribution": 3.6,
+      "evidence": {
+        "model": "llama3.2:3b",
+        "temperature": 0,
+        "seed": 42,
+        "heuristic_score": 0.36,
+        "heuristic_parts": {
+          "comments": 0.333,
+          "names": 0.0,
+          "spacing": 1.0,
+          "structure": 0.3
+        },
+        "llm_error": "LLM disabled in rules.json (llm.enabled = false)",
+        "mode": "heuristic"
+      },
+      "feedback": "Few or no comments; terse variable names; everything in main()."
+    },
+    {
+      "name": "originality",
+      "analyzer": "originality",
+      "status": "ok",
+      "score": 1.0,
+      "weight": 0.1,
+      "effective_weight": 0.1,
+      "contribution": 10.0,
+      "evidence": {
+        "max_similarity": 0.7692,
+        "most_similar_to": "submissions/other_add.c",
+        "threshold": 0.85,
+        "tokens": 243,
+        "compared_files": 2,
+        "ignored_identical_resubmission": [],
+        "top_matches": [
+          [
+            0.7692,
+            "submissions/other_add.c"
+          ],
+          [
+            0.5385,
+            "submissions/add.c"
+          ]
+        ],
+        "llm_style_signals": [],
+        "llm_solutions": {
+          "status": "skipped: LLM disabled in rules.json (llm.enabled = false)",
+          "max_similarity": 0.0,
+          "closest": null,
+          "threshold": 0.9,
+          "compared": 0
+        }
+      },
+      "feedback": "max similarity 0.77 (safe)"
+    }
+  ],
+  "flags": [
+    "readability_used_heuristic_fallback"
+  ],
+  "counterexamples": [
+    {
+      "category": "whitespace",
+      "input": "3 4",
+      "expected": "7\n",
+      "got": "8\n",
+      "note": "",
+      "why": "Input has no trailing newline; make sure the program does not depend on one."
+    },
+    {
+      "category": "zero",
+      "input": "0 5\n",
+      "expected": "5\n",
+      "got": "6\n",
+      "note": "",
+      "why": "Output differs from the correct sum. Re-check the arithmetic and the input parsing."
+    },
+    {
+      "category": "whitespace",
+      "input": "3\n4\n",
+      "expected": "7\n",
+      "got": "8\n",
+      "note": "",
+      "why": "Output differs from the correct sum. Re-check the arithmetic and the input parsing."
+    },
+    {
+      "category": "zero",
+      "input": "-5 0\n",
+      "expected": "-5\n",
+      "got": "-4\n",
+      "note": "",
+      "why": "Output differs from the correct sum. Re-check the arithmetic and the input parsing."
+    },
+    {
+      "category": "negatives",
+      "input": "-7 3\n",
+      "expected": "-4\n",
+      "got": "-3\n",
+      "note": "",
+      "why": "Output differs from the correct sum. Re-check the arithmetic and the input parsing."
+    },
+    {
+      "category": "negatives",
+      "input": "3 -7\n",
+      "expected": "-4\n",
+      "got": "-3\n",
+      "note": "",
+      "why": "Output differs from the correct sum. Re-check the arithmetic and the input parsing."
+    },
+    {
+      "category": "whitespace",
+      "input": "3 4\r\n",
+      "expected": "7\n",
+      "got": "8\n",
+      "note": "",
+      "why": "Output differs from the correct sum. Re-check the arithmetic and the input parsing."
+    },
+    {
+      "category": "negatives",
+      "input": "-1 -1\n",
+      "expected": "-2\n",
+      "got": "-1\n",
+      "note": "",
+      "why": "Output differs from the correct sum. Re-check the arithmetic and the input parsing."
+    },
+    {
+      "category": "whitespace",
+      "input": "3   4\n",
+      "expected": "7\n",
+      "got": "8\n",
+      "note": "",
+      "why": "Output differs from the correct sum. Re-check the arithmetic and the input parsing."
+    },
+    {
+      "category": "whitespace",
+      "input": "\t3 \t 4\n",
+      "expected": "7\n",
+      "got": "8\n",
+      "note": "",
+      "why": "Output differs from the correct sum. Re-check the arithmetic and the input parsing."
+    },
+    {
+      "category": "whitespace",
+      "input": "  3 4  \n",
+      "expected": "7\n",
+      "got": "8\n",
+      "note": "",
+      "why": "Output differs from the correct sum. Re-check the arithmetic and the input parsing."
+    },
+    {
+      "category": "fuzz",
+      "input": "1 34797510\n",
+      "expected": "34797511\n",
+      "got": "34797512\n",
+      "note": "",
+      "why": "Output differs from the correct sum. Re-check the arithmetic and the input parsing."
+    },
+    {
+      "category": "fuzz",
+      "input": "1 675832417\n",
+      "expected": "675832418\n",
+      "got": "675832419\n",
+      "note": "",
+      "why": "Output differs from the correct sum. Re-check the arithmetic and the input parsing."
+    },
+    {
+      "category": "fuzz",
+      "input": "497424637 1\n",
+      "expected": "497424638\n",
+      "got": "497424639\n",
+      "note": "",
+      "why": "Output differs from the correct sum. Re-check the arithmetic and the input parsing."
+    },
+    {
+      "category": "boundaries",
+      "input": "0 2147483647\n",
+      "expected": "2147483647\n",
+      "got": "2147483648\n",
+      "note": "",
+      "why": "Output differs from the correct sum. Re-check the arithmetic and the input parsing."
+    },
+    {
+      "category": "boundaries",
+      "input": "2147483647 0\n",
+      "expected": "2147483647\n",
+      "got": "2147483648\n",
+      "note": "",
+      "why": "Output differs from the correct sum. Re-check the arithmetic and the input parsing."
+    },
+    {
+      "category": "fuzz",
+      "input": "-835831967 -1\n",
+      "expected": "-835831968\n",
+      "got": "-835831967\n",
+      "note": "",
+      "why": "Output differs from the correct sum. Re-check the arithmetic and the input parsing."
+    },
+    {
+      "category": "fuzz",
+      "input": "0 -1443095139\n",
+      "expected": "-1443095139\n",
+      "got": "-1443095138\n",
+      "note": "",
+      "why": "Output differs from the correct sum. Re-check the arithmetic and the input parsing."
+    },
+    {
+      "category": "fuzz",
+      "input": "-1974805695 -1\n",
+      "expected": "-1974805696\n",
+      "got": "-1974805695\n",
+      "note": "",
+      "why": "Output differs from the correct sum. Re-check the arithmetic and the input parsing."
+    },
+    {
+      "category": "fuzz",
+      "input": "-17795104 -136927184\n",
+      "expected": "-154722288\n",
+      "got": "-154722287\n",
+      "note": "",
+      "why": "Output differs from the correct sum. Re-check the arithmetic and the input parsing."
+    },
+    {
+      "category": "fuzz",
+      "input": "1540545378 869367842\n",
+      "expected": "2409913220\n",
+      "got": "2409913221\n",
+      "note": "",
+      "why": "1540545378 + 869367842 = 2409913220 does not fit in a 32-bit signed int, so `a + b` on `int` overflows (undefined behaviour in C). Read into `long long` or check `b <= INT_MAX - a` before adding."
+    },
+    {
+      "category": "fuzz",
+      "input": "621199301 -621743136\n",
+      "expected": "-543835\n",
+      "got": "-543834\n",
+      "note": "",
+      "why": "Output differs from the correct sum. Re-check the arithmetic and the input parsing."
+    },
+    {
+      "category": "fuzz",
+      "input": "1434043593 2147483647\n",
+      "expected": "3581527240\n",
+      "got": "3581527241\n",
+      "note": "",
+      "why": "1434043593 + 2147483647 = 3581527240 does not fit in a 32-bit signed int, so `a + b` on `int` overflows (undefined behaviour in C). Read into `long long` or check `b <= INT_MAX - a` before adding."
+    },
+    {
+      "category": "fuzz",
+      "input": "1770880053 2147483646\n",
+      "expected": "3918363699\n",
+      "got": "3918363700\n",
+      "note": "",
+      "why": "1770880053 + 2147483646 = 3918363699 does not fit in a 32-bit signed int, so `a + b` on `int` overflows (undefined behaviour in C). Read into `long long` or check `b <= INT_MAX - a` before adding."
+    },
+    {
+      "category": "fuzz",
+      "input": "2147483647 1462738637\n",
+      "expected": "3610222284\n",
+      "got": "3610222285\n",
+      "note": "",
+      "why": "2147483647 + 1462738637 = 3610222284 does not fit in a 32-bit signed int, so `a + b` on `int` overflows (undefined behaviour in C). Read into `long long` or check `b <= INT_MAX - a` before adding."
+    }
+  ],
+  "suggestions": [
+    "Split long or branchy functions into smaller helpers.",
+    "Extract the core logic into a helper, e.g. `long long add(long long a, long long b)`, and call it from main.",
+    "few or no comments",
+    "terse variable names",
+    "everything in main()"
+  ],
+  "llm": {
+    "enabled": false,
+    "model": "llama3.2:3b",
+    "status": "LLM disabled in rules.json (llm.enabled = false)"
+  },
+  "llm_summary": null,
+  "usefulness_limitations": {
+    "usefulness": [
+      {
+        "use_case": "Large-course lab grading",
+        "example": "A 300-student C lab is graded unattended. For the sample add.c the agent reports the failing input '2147483647 1', the expected output 2147483648 and why `int` overflows, instead of a bare 'wrong answer'.",
+        "benefit": "Consistent, reproducible grades; TAs only review the borderline and flagged cases."
+      },
+      {
+        "use_case": "Instant feedback before the deadline",
+        "example": "A student runs the agent on a program that mallocs a result and never frees it (add_leak.c): LeakSanitizer and valgrind report the leak and the input that triggers it, and the correctness metric still shows 10/10.",
+        "benefit": "Students find memory bugs themselves, so fewer regrade requests."
+      },
+      {
+        "use_case": "Plagiarism and LLM-copy triage",
+        "example": "add_copy.c has renamed variables and a new comment but reaches similarity 1.00 with another student's file, so the report is flagged suspected_copy; solutions the local LLM writes for the same task are compared as well.",
+        "benefit": "The instructor reviews only flagged pairs instead of every submission (a flag is a lead, not proof)."
+      },
+      {
+        "use_case": "Coding-interview and hiring screens",
+        "example": "500 candidate submissions for 'add two integers safely' are ranked by correctness, edge-case handling and memory safety. A candidate whose program never halts (add_infinite.c) gets a partial report instead of blocking the batch.",
+        "benefit": "Fast first-round filtering where every score can be explained metric by metric."
+      }
+    ],
+    "limitations": [
+      {
+        "limitation": "Passing tests does not prove correctness",
+        "example": "add_hardcoded.c memorises the 10 hidden tests: the correctness metric gives it 20/20, yet it is wrong for almost every other input. Only the separate 10% 'logical' metric exposes it, so its overall grade (about 77/100) still looks like a pass.",
+        "mitigation": "Compare against a reference solution on corner cases and seeded fuzz inputs, and weight those metrics heavily."
+      },
+      {
+        "limitation": "Complexity is only measured on the inputs the agent generates",
+        "example": "add_slow_branch.c spins for billions of iterations when the first number exceeds 2,000,000,000. The problem has no size parameter, so the estimator always profiles the sample input '7 5' and reports O(1) with full marks, even though two hidden tests time out.",
+        "mitigation": "Use worst-case inputs in the generator and only trust this metric for problems that have a size parameter."
+      },
+      {
+        "limitation": "Short problems cause plagiarism false positives",
+        "example": "add_minimal.c is the obvious six-line scanf/printf solution written independently, yet its normalized tokens equal another student's, so it reaches similarity 1.00, is flagged suspected_copy and loses all originality points.",
+        "mitigation": "Require a minimum program size, let a human review every flag, and prefer problems with several valid solution shapes."
+      },
+      {
+        "limitation": "Readability scoring can be gamed",
+        "example": "Adding meaningless comments such as '// read' and '// print' to add.c (add_noisy_comments.c) raises the heuristic readability score from 0.19 to 0.56 although the single-letter names and single-function layout are unchanged; the heuristic is what runs when Ollama is unavailable.",
+        "mitigation": "Blend in an LLM review with a rubric, discard the LLM verdict when the code tries to instruct the reviewer, and have a human spot-check readability."
+      }
+    ]
+  },
+  "tool_versions": {
+    "gcc": "gcc (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0",
+    "valgrind": "valgrind-3.22.0",
+    "cppcheck": "Cppcheck 2.13.0",
+    "python": "3.12.3",
+    "lizard": "1.24.3"
+  },
+  "agent_log": [
+    "[rules] rules.json: 9 metrics, weights sum to 1.00",
+    "[llm] LLM disabled in rules.json (llm.enabled = false)",
+    "[first_pass] compiled (1 warning(s)), smoke run OK",
+    "[dispatch] correctness (correctness) -> ok, score 1.00",
+    "[dispatch] syntax (compiler_warnings) -> ok, score 1.00",
+    "[dispatch] structure (static_analysis) -> ok, score 0.75",
+    "[dispatch] modularity (modularity) -> ok, score 0.50",
+    "[dispatch] logical (edge_cases) -> ok, score 0.14",
+    "[dispatch] complexity (complexity) -> ok, score 1.00",
+    "[dispatch] memory_safety (memory_safety) -> ok, score 1.00",
+    "[dispatch] readability (readability) -> ok, score 0.36",
+    "[dispatch] originality (originality) -> ok, score 1.00",
+    "[collate] grade 77.46/100",
+    "[write] add_hardcoded.json and add_hardcoded.txt"
+  ]
+}
